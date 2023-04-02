@@ -10,3 +10,8 @@ resource "kubernetes_namespace" "minikube" {
     name = "kube-${each.value}"
   }
 }
+
+module "redis" {
+  source       = "../../../modules/redis"
+  password = "${var.password}"
+}
