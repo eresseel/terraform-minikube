@@ -5,4 +5,8 @@ resource "helm_release" "prometheus" {
   chart      = "prometheus"
   version    = "20.0.2"
   wait       = true
+
+  values = [
+    file("${path.module}/values.yaml")
+  ]
 }
