@@ -19,3 +19,7 @@ module "redis" {
 module "prometheus" {
   source = "../../../modules/prometheus"
 }
+
+module "grafana" {
+  source = "../../../modules/grafana"
+}
