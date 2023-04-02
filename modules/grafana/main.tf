@@ -5,4 +5,8 @@ resource "helm_release" "grafana" {
   chart      = "grafana"
   version    = "6.52.4"
   wait       = true
+
+  values = [
+    file("${path.module}/values.yaml")
+  ]
 }
