@@ -11,6 +11,8 @@ ingress:
 sidecar:
   datasources:
     enabled: true
+  dashboards:
+    enabled: true
 
 datasources:
  datasources.yaml:
@@ -19,3 +21,21 @@ datasources:
     - name: Prometheus
       type: prometheus
       url: http://prometheus.example.live
+
+dashboardProviders: 
+ dashboardproviders.yaml:
+   apiVersion: 1
+   providers:
+   - name: 'default'
+     orgId: 1
+     folder: ''
+     type: file
+     disableDeletion: false
+     editable: true
+     options:
+       path: /var/lib/grafana/dashboards/default
+
+dashboards:
+  default:
+    minikube-cluster-dashboard:
+      url: https://raw.githubusercontent.com/eresseel/terraform-minikube/main/modules/grafana/dashboards/minikube-cluster-dashboard.json
