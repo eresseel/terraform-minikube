@@ -14,3 +14,11 @@
   cd minikube-playbook
   ```
 * Open README.md for instructions
+
+## 2. Deploy in minikube
+```bash
+cd /env/minikube/live
+terraform init
+terraform plan
+terraform apply -var password=<password>
+```
