@@ -27,3 +27,18 @@ terraform apply -var password=<password>
 ```bash
 helm -n kube-application get all redis
 ```
+
+## 4. The URL of Prometheus
+```bash
+http://prometheus.example.live
+```
+
+## 5. Grafana information
+### 5.1. The URL of Grafana
+```bash
+http://grafana.example.live
+```
+### 5.2. Get Grafana password
+```bash
+kubectl get secret -n kube-monitoring grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+```
