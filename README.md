@@ -22,3 +22,8 @@ terraform init
 terraform plan
 terraform apply -var password=<password>
 ```
+
+## 3. Redis information
+```bash
+helm -n kube-application get all redis
+```
