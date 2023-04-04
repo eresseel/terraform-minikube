@@ -39,3 +39,5 @@ dashboards:
   default:
     minikube-cluster-dashboard:
       url: https://raw.githubusercontent.com/eresseel/terraform-minikube/main/modules/grafana/dashboards/minikube-cluster-dashboard.json
+    pod-stats-dashboard:
+      url: https://raw.githubusercontent.com/eresseel/terraform-minikube/main/modules/grafana/dashboards/pod-stats-dashboard.json
