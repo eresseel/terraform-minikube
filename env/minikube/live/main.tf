@@ -12,6 +12,14 @@ resource "kubernetes_namespace" "minikube" {
 }
 
 module "redis" {
-  source       = "../../../modules/redis"
+  source   = "../../../modules/redis"
   password = "${var.password}"
+}
+
+module "prometheus" {
+  source = "../../../modules/prometheus"
+}
+
+module "grafana" {
+  source = "../../../modules/grafana"
 }

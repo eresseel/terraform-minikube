@@ -1,0 +1,43 @@
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/use-regex: "true"
+  path: /?(.*)
+  hosts:
+    - grafana.example.live
+
+sidecar:
+  datasources:
+    enabled: true
+  dashboards:
+    enabled: true
+
+datasources:
+ datasources.yaml:
+   apiVersion: 1
+   datasources:
+    - name: Prometheus
+      type: prometheus
+      url: http://prometheus.example.live
+
+dashboardProviders: 
+ dashboardproviders.yaml:
+   apiVersion: 1
+   providers:
+   - name: 'default'
+     orgId: 1
+     folder: ''
+     type: file
+     disableDeletion: false
+     editable: true
+     options:
+       path: /var/lib/grafana/dashboards/default
+
+dashboards:
+  default:
+    minikube-cluster-dashboard:
+      url: https://raw.githubusercontent.com/eresseel/terraform-minikube/main/modules/grafana/dashboards/minikube-cluster-dashboard.json
+    pod-stats-dashboard:
+      url: https://raw.githubusercontent.com/eresseel/terraform-minikube/main/modules/grafana/dashboards/pod-stats-dashboard.json
