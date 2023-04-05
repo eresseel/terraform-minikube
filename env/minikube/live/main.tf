@@ -11,6 +11,11 @@ resource "kubernetes_namespace" "minikube" {
   }
 }
 
+module "flask" {
+  source = "../../../modules/flask"
+  password = "${var.password}"
+}
+
 module "redis" {
   source   = "../../../modules/redis"
   password = "${var.password}"
