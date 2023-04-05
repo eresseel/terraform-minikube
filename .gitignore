@@ -1,0 +1,14 @@
+# Local .terraform directories
+env/minikube/live/.terraform
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+!*.tfstate.secret
+
+backend.tf
+secret.auto.tfvars
+env/minikube/live/.terraform.lock.hcl
+
+# vscode directories
+.vscode
