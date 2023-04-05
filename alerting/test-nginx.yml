@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: nginx
+  namespace: kube-application
+spec:
+  replicas: 15
+  selector:
+    matchLabels:
+      type: nginx
+  template:
+    metadata:
+      labels:
+        type: nginx
+    spec:
+      containers:
+        - name: api
+          image: nginx:stable-alpine3.17-slim
