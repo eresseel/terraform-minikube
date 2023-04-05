@@ -3,3 +3,61 @@ server:
     enabled: true
     hosts:
       - prometheus.example.live
+
+alertmanager:
+  enabled: true
+  ingress:
+    enabled: true
+    annotations: 
+      kubernetes.io/ingress.class: "nginx"
+      ingress.kubernetes.io/ssl-redirect: "false"
+      nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    hosts:
+      - host: alertmanager.example.live
+        paths:
+          - path: /
+            pathType: Prefix
+  config:
+    global:
+      resolve_timeout: 20s
+
+    receivers:
+      - name: default-receiver
+      - name: webhook
+        webhook_configs:
+          - send_resolved: true
+            url: http://flask.example.live/alert
+            http_config:
+              follow_redirects: false
+              enable_http2: false
+            max_alerts: 2
+
+    route:
+      group_wait: 10s
+      group_interval: 5m
+      receiver: webhook
+      repeat_interval: 3h
+
+      routes: 
+        - receiver: webhook
+          matchers:
+            - severity =~ "info|warning|error|critical"
+          repeat_interval: 1m
+          continue: true
+
+serverFiles:
+  alerting_rules.yml:
+    groups:
+      - name: Least15pods
+        rules:
+        - alert: Least15pods
+          annotations:
+            description: |-
+              When there are at least 15 "non-system" pods.
+            summary: When there are at least 15 "non-system" pods.
+            emails: "beres.laszlo1990@gmail.com"
+          expr: sum by (namespace) (kube_pod_info{namespace="kube-application"}) > 15
+          for: 5s
+          labels:
+            app: Least15pods
+            severity: warning
