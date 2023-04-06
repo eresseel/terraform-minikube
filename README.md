@@ -18,13 +18,14 @@ sudo apt-get install virtualbox-7.0
 sudo apt-get install virtualbox-ext-pack
 ```
 
-### 1.1.2 Install minikube and set
+### 1.1.2 Install minikube and start
 ```bash
 curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
 sudo dpkg -i minikube_latest_amd64.deb
 minikube start --driver=virtualbox
 minikube addons enable ingress
 ```
+
 ### 1.1.3 Install kubectl
 ```bash
 sudo apt-get install -y ca-certificates curl apt-transport-https
@@ -53,15 +54,22 @@ sudo apt-get install helm
 ```
 
 ## 2. Add ip and domain in /etc/hosts
+### 2.1. Get minikube ip for non-root user
 ```bash
-sudo echo "$(minikube ip)   flask.example.live" >> /etc/hosts
-sudo echo "$(minikube ip)   prometheus.example.live" >> /etc/hosts
-sudo echo "$(minikube ip)   alertmanager.example.live" >> /etc/hosts
-sudo echo "$(minikube ip)   grafana.example.live" >> /etc/hosts
+minikube ip
 ```
+
+### 2.2. Update root user's /etc/hosts file
+```bash
+echo "<minikube ip address>   flask.example.live" >> /etc/hosts
+echo "<minikube ip address>   prometheus.example.live" >> /etc/hosts
+echo "<minikube ip address>   alertmanager.example.live" >> /etc/hosts
+echo "<minikube ip address>   grafana.example.live" >> /etc/hosts
+```
+
 ## 3. Deploy in minikube
 ```bash
-cd /env/minikube/live
+cd env/minikube/live
 terraform init
 terraform plan
 terraform apply -var password=password
